@@ -1,3 +1,6 @@
+package wueb;
+
+
 public class Buchungen {
 
     private String datum ;

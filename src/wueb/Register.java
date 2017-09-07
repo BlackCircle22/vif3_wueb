@@ -1,3 +1,4 @@
+package wueb;
 public class Register {
 
     private int regNummer;

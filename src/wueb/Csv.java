@@ -1,4 +1,4 @@
-
+package wueb;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -218,10 +218,11 @@ private int anzahlZeilenCsvBuch(int wasTun) throws FileNotFoundException, IOExce
             int i = 0;
             while(scanner.hasNextLine()){
                 buchAus[i] = scanner.nextLine();
+                System.out.println(""+buchAus[i]);
                 String[] buchSplit = buchAus[i].split(";");
         //        System.out.println("Datum: " + buchSplit[0] + " Betrag: " + buchSplit[1] );
                 if (buchSplit[2].equals("Eingangsrechnung")) {
-        //            System.out.println("Eingangsrechnung!");
+                        System.out.println("Eingangsrechnung!");
                     i++;
                 } else {
                     // buchAus[i] = null;

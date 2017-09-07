@@ -1,3 +1,4 @@
+package wueb;
 public class NeueBuchungen {
 
     public NeueBuchungen(Buchungen buchNeu) {
