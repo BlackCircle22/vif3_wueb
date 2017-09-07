@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="wueb_uml">
+  <ClassDiagramComponents>
+    <Class name="Konten" package="" visibility="public" xPosition="83.0" yPosition="206.0">
+      <Fields>
+        <Field name="String" type="kontonummer" visibility="private"/>
+        <Field name="String" type="kontoBezeichnung" visibility="private"/>
+        <Field name="Kontoart" type="kontoart" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="NeueBuchungen" package="" visibility="public" xPosition="652.0" yPosition="483.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="guiNeueBuchungen" returnType="void" visibility="public"/>
+        <Method name="buchungSpeichern" returnType="void" visibility="public">
+          <Argument type="datum" name="String"/>
+          <Argument type="betrag" name="Double"/>
+          <Argument type="buchungsart" name="Buchungsart"/>
+          <Argument type="buchungstext" name="String"/>
+          <Argument type="steuerschluessel" name="Steuerschluessel"/>
+        </Method>
+        <Method name="abbrechen" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Buchungen" package="" visibility="public" xPosition="83.0" yPosition="445.0">
+      <Fields>
+        <Field name="String" type="datum" visibility="private"/>
+        <Field name="Double" type="betrag" visibility="private"/>
+        <Field name="Buchungsart" type="buchungsart" visibility="private"/>
+        <Field name="String" type="buchungstext" visibility="private"/>
+        <Field name="Steuerschluessel" type="steuerschluessel" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="WUEB" package="" visibility="public" xPosition="348.0" yPosition="570.0">
+      <Fields>
+        <Field name="Csv" type="csvBuch" visibility="private"/>
+        <Field name="Csv" type="csvKonten" visibility="private"/>
+        <Field name="Int" type="csvBuchAktZeile" visibility="private"/>
+        <Field name="String" type="konten[][]" visibility="private"/>
+        <Field name="String" type="einnahmen[][]" visibility="private"/>
+        <Field name="String" type="ausgaben[][]" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="guiWUEB" returnType="void" visibility="public"/>
+        <Method name="guiNeueBuchungen" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Csv" package="" visibility="public" xPosition="348.0" yPosition="206.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="pruefenVorhandenCsvBuch" returnType="Boolean" visibility="public">
+          <Argument type="csvBuch" name="Csv"/>
+        </Method>
+        <Method name="naechsteBuchungLesen" returnType="Int" visibility="public">
+          <Argument type="letzteZeile" name="Int"/>
+        </Method>
+        <Method name="neueBuchungSchreiben" returnType="Int" visibility="public">
+          <Argument type="datum" name="String"/>
+          <Argument type="betrag" name="Double"/>
+          <Argument type="buchungsart" name="Buchungsart"/>
+          <Argument type="buchungstext" name="String"/>
+          <Argument type="steuerschluessel" name="Steuerschluessel"/>
+        </Method>
+        <Method name="buchungenCsvErstellen" returnType="Boolean" visibility="public">
+          <Argument type="csvBuch" name="Csv"/>
+        </Method>
+        <Method name="summeEinnahmen" returnType="Double" visibility="public"/>
+        <Method name="summeAusgaben" returnType="Double" visibility="public"/>
+        <Method name="getBuchungstext" returnType="String" visibility="public">
+          <Argument type="zeilenNummer" name="Int"/>
+        </Method>
+        <Method name="getKontonummer" returnType="String" visibility="public">
+          <Argument type="zeilenNummer" name="Int"/>
+        </Method>
+        <Method name="getBruttoBetrag" returnType="Double" visibility="public">
+          <Argument type="zeilenNummer" name="Int"/>
+        </Method>
+        <Method name="pruefenVorhandenCsvKonten" returnType="Boolean" visibility="public">
+          <Argument type="csvKonten" name="Csv"/>
+        </Method>
+        <Method name="lesenCsvKonten_ktonr_bez" returnType="String[][]" visibility="public"/>
+        <Method name="lesenCsvEinnamen_ktonr_dat_text_betrag_steuer" returnType="String[][]" visibility="public"/>
+        <Method name="lesenCsvAusgaben_ktonr_dat_text_betrag_steuer" returnType="String[][]" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Operation" package="" visibility="public" xPosition="652.0" yPosition="206.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="umsatzsteuerBerechnen" returnType="Double" visibility="public">
+          <Argument type="bruttoBetrag" name="Double"/>
+          <Argument type="steuerProzent" name="Double"/>
+        </Method>
+        <Method name="nettoBerechnen" returnType="Double" visibility="public">
+          <Argument type="bruttoBetrag" name="Double"/>
+          <Argument type="steuerProzent" name="Double"/>
+        </Method>
+        <Method name="summeUeberschuss" returnType="Double" visibility="public">
+          <Argument type="einnahme" name="Double"/>
+          <Argument type="ausgaben" name="Double"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Register" package="" visibility="public" xPosition="1035.0" yPosition="26.0">
+      <Fields>
+        <Field name="Int" type="regNummer" visibility="private"/>
+        <Field name="String" type="regBezeichnung" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Anmeldung" package="" visibility="public" xPosition="860.0" yPosition="445.0">
+      <Fields>
+        <Field name="String" type="benutzername" visibility="private"/>
+        <Field name="String" type="passwort" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="pruefenLogin" returnType="void" visibility="public"/>
+        <Method name="guiAnmeldung" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Enum name="Kontoart" package="" visibility="public" xPosition="83.0" yPosition="26.0">
+      <Literals>
+        <Literal name="Aktivkonto"/>
+        <Literal name="Passivkonto"/>
+        <Literal name="Ertragskonto"/>
+        <Literal name="Aufwandskonto"/>
+      </Literals>
+    </Enum>
+    <Enum name="Buchungsart" package="" visibility="public" xPosition="348.0" yPosition="26.0">
+      <Literals>
+        <Literal name="Eingangsrechnung"/>
+        <Literal name="Ausgangsrechnung"/>
+      </Literals>
+    </Enum>
+    <Enum name="Steuerschluessel" package="" visibility="public" xPosition="617.0" yPosition="26.0">
+      <Literals>
+        <Literal name="Mehrwertsteuer_19"/>
+        <Literal name="Vorsteuer_19"/>
+        <Literal name="Mehrwertsteuer_7"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>
