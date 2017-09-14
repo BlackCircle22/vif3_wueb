@@ -1,3 +1,4 @@
+package wueb;
 public class Operation {
 
     public Double umsatzsteuerBerechnen(double bruttoBetrag, double steuerProzent) {
@@ -9,6 +10,14 @@ public class Operation {
     }
 
     public Double summeUeberschuss(double einnahmen, double ausgaben) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        double summeUeberschuss = einnahmen - ausgaben;
+        
+        return summeUeberschuss;
+          
+    }
+
+    String summeUeberschuss() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

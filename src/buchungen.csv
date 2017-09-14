@@ -23,3 +23,4 @@ Datum;Betrag;Buchungsart;Buchungstext;Steuerschluessel
 18.12.1212;647.11;Ausgangsrechnung;TestBuchung1;Vorsteuer_19
 19.12.1212;747.11;Ausgangsrechnung;TestBuchung1;Vorsteuer_19
 20.12.1212;847.11;Ausgangsrechnung;TestBuchung1;Vorsteuer_19
+20.12.1212;847.11;Eingangsrechnung;TestBuchung1;Vorsteuer_19

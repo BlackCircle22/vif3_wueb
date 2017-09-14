@@ -1,3 +1,4 @@
+package wueb;
 public class Konten {
 
     private String kontonummer ;
