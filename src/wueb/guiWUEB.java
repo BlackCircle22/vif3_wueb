@@ -1,21 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wueb;
 
-/**
- *
- * @author aschoenf
- */
-public class guiWUEB extends javax.swing.JFrame {
+import java.awt.Color;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+
+public class guiWUEB extends JFrame {
 
     /**
      * Creates new form guiWUEB
      */
     public guiWUEB() {
         initComponents();
+        initTableTest();
+
     }
 
     /**
@@ -36,7 +36,13 @@ public class guiWUEB extends javax.swing.JFrame {
         tfAusgaben = new javax.swing.JTextField();
         tfUeberschuss = new javax.swing.JTextField();
         lblTitel1 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        regPanel = new javax.swing.JTabbedPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtabEinnahmen = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtabAusgaben = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtabKonten = new javax.swing.JTable();
 
         lblTitel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblTitel.setText("Neue Buchung - WUEB");
@@ -65,6 +71,48 @@ public class guiWUEB extends javax.swing.JFrame {
         lblTitel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblTitel1.setText("Was über Bilanzen - WUEB");
 
+        jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Betrag", "Datum"
+            }
+        ));
+        jScrollPane4.setViewportView(jtabEinnahmen);
+
+        regPanel.addTab("Einnahmen", jScrollPane4);
+
+        jtabAusgaben.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jtabAusgaben);
+
+        regPanel.addTab("Ausgaben", jScrollPane5);
+
+        jtabKonten.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jtabKonten);
+
+        regPanel.addTab("Konten", jScrollPane6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +120,7 @@ public class guiWUEB extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(93, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEinnahmen, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -87,12 +136,11 @@ public class guiWUEB extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btmNeueBuchung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(25, 25, 25))
-                    .addComponent(lblTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)))
                 .addGap(87, 87, 87))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2)
+                .addComponent(regPanel)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -111,13 +159,14 @@ public class guiWUEB extends javax.swing.JFrame {
                     .addComponent(lblUeberschuss)
                     .addComponent(btmNeueBuchung)
                     .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void btmNeueBuchungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmNeueBuchungActionPerformed
         // TODO add your handling code here:
@@ -162,16 +211,52 @@ public class guiWUEB extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmNeueBuchung;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable jtabAusgaben;
+    private javax.swing.JTable jtabEinnahmen;
+    private javax.swing.JTable jtabKonten;
     private javax.swing.JLabel lblAusgaben;
     private javax.swing.JLabel lblEinnahmen;
     private javax.swing.JLabel lblTitel;
     private javax.swing.JLabel lblTitel1;
     private javax.swing.JLabel lblUeberschuss;
+    private javax.swing.JTabbedPane regPanel;
     private javax.swing.JTextField tfAusgaben;
     private javax.swing.JTextField tfEinnahmen;
     private javax.swing.JTextField tfUeberschuss;
     // End of variables declaration//GEN-END:variables
-}
+
+    public void initTableTest() {
+
+        String[][] daten = {
+            {"1000", "01.01.1970"},
+            {"2000", "02.01.1970"},
+            {"3000", "03.01.1970"},
+            {"4000", "04.01.1970"},
+            {"5000", "05.01.1970"},
+            {"6000", "06.01.1970"},};
+        
+       jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
+            daten,
+            new String [] {
+                "Betrag", "Datum"
+            }
+        ));
+
+             
+    }
+
+       
+        
+        
+            }
+    
+
+
+
+
