@@ -33,8 +33,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="93" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="regPanel" pref="708" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="lblTitel1" min="-2" pref="312" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
@@ -42,51 +47,47 @@
                           <Component id="lblEinnahmen" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lblUeberschuss" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="tfEinnahmen" max="32767" attributes="0"/>
-                          <Component id="tfUeberschuss" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="tfUeberschuss" min="-2" pref="99" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblAusgaben" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblAusgaben" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="tfAusgaben" min="-2" pref="60" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="btmNeueBuchung" max="32767" attributes="0"/>
+                          <Component id="tfAusgaben" max="32767" attributes="0"/>
+                          <Component id="btmNeueBuchung" min="-2" pref="110" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="regPanel" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Component id="lblTitel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblEinnahmen" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAusgaben" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfEinnahmen" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="tfAusgaben" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="tfAusgaben" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="lblAusgaben" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="tfEinnahmen" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="lblEinnahmen" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblUeberschuss" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btmNeueBuchung" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfUeberschuss" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="btmNeueBuchung" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="tfUeberschuss" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
               <Component id="regPanel" min="-2" pref="194" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

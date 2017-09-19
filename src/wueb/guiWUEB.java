@@ -14,7 +14,12 @@ public class guiWUEB extends JFrame {
      */
     public guiWUEB() {
         initComponents();
-        initTableTest();
+        initTableDaten();
+        
+        tfAusgaben.setText("5000 Mark");
+        tfEinnahmen.setText("1 Mark");
+        tfUeberschuss.setText("Null Mark");
+        
 
     }
 
@@ -117,49 +122,49 @@ public class guiWUEB extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(regPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(181, 181, 181)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEinnahmen, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblUeberschuss, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfEinnahmen)
-                            .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
+                        .addComponent(lblAusgaben)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAusgaben)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btmNeueBuchung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(25, 25, 25)))
-                .addGap(87, 87, 87))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(regPanel)
-                .addContainerGap())
+                            .addComponent(tfAusgaben)
+                            .addComponent(btmNeueBuchung, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(25, 25, 25)
                 .addComponent(lblTitel1)
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEinnahmen)
-                    .addComponent(lblAusgaben)
-                    .addComponent(tfEinnahmen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblAusgaben))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfEinnahmen, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblEinnahmen)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUeberschuss)
-                    .addComponent(btmNeueBuchung)
-                    .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                    .addComponent(btmNeueBuchung, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -169,7 +174,7 @@ public class guiWUEB extends JFrame {
 
 
     private void btmNeueBuchungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmNeueBuchungActionPerformed
-        // TODO add your handling code here:
+        new guiBUCHUNG().setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btmNeueBuchungActionPerformed
 
     private void tfEinnahmenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEinnahmenActionPerformed
@@ -231,32 +236,54 @@ public class guiWUEB extends JFrame {
     private javax.swing.JTextField tfUeberschuss;
     // End of variables declaration//GEN-END:variables
 
-    public void initTableTest() {
+    public void initTableDaten() {
 
-        String[][] daten = {
+        // Bsp. Daten für Registerkarten, muss noch mit csv.java übergeben werden
+        String[][] einnahmen = {
             {"1000", "01.01.1970"},
             {"2000", "02.01.1970"},
             {"3000", "03.01.1970"},
             {"4000", "04.01.1970"},
             {"5000", "05.01.1970"},
             {"6000", "06.01.1970"},};
-        
-       jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
-            daten,
-            new String [] {
-                "Betrag", "Datum"
-            }
+
+        String[][] ausgaben = {
+            {"1100", "01.01.1975"},
+            {"2100", "02.01.1975"},
+            {"35500", "03.01.1975"},
+            {"45600", "04.01.1975"},
+            {"520", "05.01.1975"},
+            {"600", "06.01.1975"},};
+
+        String[][] konten = {
+            {"0001", "Ingangsetzungs- und Erweiterungsaufwand", "Aktivkonto", "Mehrwertsteuer_19", "1050", "900", "19.09.2017"},
+            {"0002", "Aufwendungen Waehrungsumstellung Euro", "Passivkonto", "Vorsteuer_19", "1050", "900", "19.09.2017"},
+            {"0010", "Konzessionen und gewerbl.Schutzrechte", "Ertragskonto", "Mehrwertsteuer_7", "1050", "900", "19.09.2017"},
+            {"0015", "Konzessionen", "Aufwandskonto", "Mehrwertsteuer_7", "1050", "900", "19.09.2017"},};
+     
+
+        jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
+                einnahmen,
+                new String[]{
+                    "Betrag", "Datum"
+                }
+        ));
+        jtabAusgaben.setModel(new javax.swing.table.DefaultTableModel(
+                ausgaben,
+                new String[]{
+                    "Betrag", "Datum"
+                }
         ));
 
-             
+        jtabKonten.setModel(new javax.swing.table.DefaultTableModel(
+                konten,
+                new String[]{
+                    "Kontonummer", "Kontobezeichnung", "Kontoart", "Steuerschlüssel", "Brutto", "Netto", "Datum"
+                }
+        ));
+        
+        
+
     }
 
-       
-        
-        
-            }
-    
-
-
-
-
+}
