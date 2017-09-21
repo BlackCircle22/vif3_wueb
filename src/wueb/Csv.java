@@ -12,17 +12,56 @@ public class Csv {
 
     private final String csvBuchFileName;
     private final File csvBuchFile;
+    private final File csvLoginFile;
     private final String csvKontenFileName;
     private final File csvKontenFile;
+    private final String csvLoginFileName;
     private PrintWriter csvBuchPW;
     
-    public Csv(String csvBuch, String csvKonten) throws FileNotFoundException {
+    public Csv(String csvBuch, String csvKonten, String csvLogin) throws FileNotFoundException {
         this.csvBuchFileName = csvBuch;
         csvBuchFile = new File(csvBuchFileName);
         this.csvKontenFileName = csvKonten;
         csvKontenFile = new File(csvKontenFileName);
+        this.csvLoginFileName = csvLogin;
+        csvLoginFile = new File(csvLoginFileName);
     }
       
+    public Boolean pruefenVorhandenCsvLogin()throws FileNotFoundException {
+        if (!this.csvLoginFile.exists() && !this.csvLoginFile.isDirectory()) {
+            System.out.println("Datei Login nicht vorhanden! 1");
+            return false;
+        }
+        else {
+            System.out.println("Datei Login existiert! 1");
+            return true;
+        }
+    }
+    public String[] lesenCsvLogin() throws FileNotFoundException, IOException {
+ 
+        String[] login = new String[1];
+
+        if (this.pruefenVorhandenCsvLogin()){
+            BufferedReader br = new BufferedReader(new FileReader(csvLoginFileName));
+            Scanner scanner = new Scanner(br);
+            //scanner.useDelimiter(";");
+            System.out.println("Lese Login ...");
+            int i = 0;
+            while(scanner.hasNextLine()){
+                login[i] = scanner.nextLine();
+//                System.out.println("Lese Konten ...2");
+//                System.out.println(konten[i]);
+                i++;
+            }
+            scanner.close();
+            br.close();
+        }
+        else {
+            login[0] = "Kein Login vorhanden; undefiniert";
+            System.out.println(login[0]);
+        }
+        return login;
+    }
 
     public Boolean pruefenVorhandenCsvBuch()throws FileNotFoundException {
         if (!this.csvBuchFile.exists() && !this.csvBuchFile.isDirectory()) {
