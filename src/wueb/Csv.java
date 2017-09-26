@@ -17,6 +17,7 @@ public class Csv {
     private final File csvKontenFile;
     private final String csvLoginFileName;
     private PrintWriter csvBuchPW;
+    private PrintWriter csvLoginPW;
     
     public Csv(String csvBuch, String csvKonten, String csvLogin) throws FileNotFoundException {
         this.csvBuchFileName = csvBuch;
@@ -37,28 +38,24 @@ public class Csv {
             return true;
         }
     }
-    public String[] lesenCsvLogin() throws FileNotFoundException, IOException {
+    public String lesenCsvLogin() throws FileNotFoundException, IOException {
  
-        String[] login = new String[1];
+        String login = "";
 
         if (this.pruefenVorhandenCsvLogin()){
             BufferedReader br = new BufferedReader(new FileReader(csvLoginFileName));
             Scanner scanner = new Scanner(br);
             //scanner.useDelimiter(";");
-            System.out.println("Lese Login ...");
-            int i = 0;
+//            System.out.println("Lese Login ...");
             while(scanner.hasNextLine()){
-                login[i] = scanner.nextLine();
-//                System.out.println("Lese Konten ...2");
-//                System.out.println(konten[i]);
-                i++;
+                login = scanner.nextLine();
             }
             scanner.close();
             br.close();
         }
         else {
-            login[0] = "Kein Login vorhanden; undefiniert";
-            System.out.println(login[0]);
+            login = "Kein Login vorhanden; undefiniert";
+            System.out.println(login);
         }
         return login;
     }
@@ -88,9 +85,20 @@ public class Csv {
             return true;
         }
     }
-
-    public int naechsteBuchungLesen(int letzteZeile) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean lgoinCsvErstellen() throws FileNotFoundException {
+        if (this.pruefenVorhandenCsvLogin()) {
+            System.out.println("Datei Login existiert bereits, Append aktiv! 2");
+            this.csvLoginPW = new PrintWriter(new FileOutputStream(new File(this.csvLoginFileName), true));
+            this.csvLoginPW.close();
+            return false;
+        }
+        else {
+            System.out.println("Datei Login erstellt! 2");
+            this.csvLoginPW = new PrintWriter(this.csvLoginFileName);
+            this.csvLoginPW.println("Benutzername; Passwort");
+            this.csvLoginPW.close();
+            return true;
+        }
     }
 
     public void neueBuchungSchreiben(String datum , double betrag , Buchungsart buchungsart , String buchungstext , Steuerschluessel steuerschluessel ) throws FileNotFoundException {
@@ -99,16 +107,21 @@ public class Csv {
         this.csvBuchPW.println();
         this.csvBuchPW.close();
     }
+    public void neuesLoginSchreiben(String userName , String password ) throws FileNotFoundException {
+        this.csvLoginPW = new PrintWriter(new FileOutputStream(new File(this.csvLoginFileName), true));
+        this.csvLoginPW.write(userName + ";" + password);
+        this.csvLoginPW.println();
+        this.csvLoginPW.close();
+    }
 
     public double summeEinnahmen() throws IOException {
         double betrag = 0.00;
         int anzZeilen = anzahlZeilenCsvBuch(2);
-        String[] buchEin = this.lesenCsvEinnamen_ktonr_dat_text_betrag_steuer();
+        String[][] buchEin = this.lesenCsvEinnamen_ktonr_dat_text_betrag_steuer();
         for (int i=0;i<anzZeilen;i++) {
-            String [] buchSplit = buchEin[i].split(";");
-            if (buchEin[i] != null)
-              betrag = betrag + Double.parseDouble(buchSplit[1]);
-        //      System.out.println("Einnahmen-Betrag addiert: " + buchSplit[1]);
+            if (buchEin[i][1] != null)
+              betrag = betrag + Double.parseDouble(buchEin[i][1]);
+        //      System.out.println("Einnahmen-Betrag addiert: " + buchEin[1]);
         }
         return betrag;
     }
@@ -116,27 +129,13 @@ public class Csv {
     public double summeAusgaben() throws IOException {
         double betrag = 0.00;
         int anzZeilen = anzahlZeilenCsvBuch(1);
-        String[] buchEin = this.lesenCsvAusgaben_ktonr_dat_text_betrag_steuer();
-        //Anzahl Zeilen muss noch bestimmt werden (i<9)
+        String[][] buchAus = this.lesenCsvAusgaben_ktonr_dat_text_betrag_steuer();
         for (int i=0;i<anzZeilen;i++) {
-            String [] buchSplit = buchEin[i].split(";");
-            if (buchEin[i] != null)
-              betrag = betrag + Double.parseDouble(buchSplit[1]);
-         //     System.out.println("Ausgaben-Betrag addiert: " + buchSplit[1]);
+            if (buchAus[i][1] != null)
+              betrag = betrag + Double.parseDouble(buchAus[i][1]);
+         //     System.out.println("Ausgaben-Betrag addiert: " + buchAus[i][1]);
         }
         return betrag;
-    }
-
-    public String getBuchungstext(int zeilenNummer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String getKontonummer(int zeilenNummer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public double getBruttoBetrag(int zeilenNummer) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public boolean pruefenVorhandenCsvKonten() {
@@ -150,36 +149,42 @@ public class Csv {
         }
     }
 
-    public String[] lesenCsvKonten_ktonr_bez() throws FileNotFoundException, IOException {
- 
-        String[] konten = new String[1196];
+    public String[][] lesenCsvKonten_ktonr_bez() throws FileNotFoundException, IOException {
+//      System.out.println("Lese Konten - Pruefung");
+        String[][] konten = new String[1196][3];
 
         if (this.pruefenVorhandenCsvKonten()){
             BufferedReader br = new BufferedReader(new FileReader(csvKontenFileName));
             Scanner scanner = new Scanner(br);
             //scanner.useDelimiter(";");
-            System.out.println("Lese Konten ...");
+            System.out.println("Lese Konten .....");
             int i = 0;
+            
             while(scanner.hasNextLine()){
-                konten[i] = scanner.nextLine();
-//                System.out.println("Lese Konten ...2");
-//                System.out.println(konten[i]);
+                String[] kontenSplit = scanner.nextLine().split(";");
+                for (int row=0;row<3;row++){
+                    konten[i][row] = kontenSplit[row];
+                }
+//              System.out.println("Kontonr: " + konten[i][0] + " Bezeichnung: " + konten[i][1] );
                 i++;
             }
             scanner.close();
             br.close();
         }
         else {
-            konten[0] = "0000; Keine Koten vorhanden!; undefiniert";
-            System.out.println(konten[0]);
+            konten[0][0] = "0000";
+            konten[0][1] = "Keine Konten vorhanden!";
+            konten[0][2] = "undefiniert";
+            System.out.println(konten[0][1]);
         }
         return konten;
     }
 
-    public String[] lesenCsvEinnamen_ktonr_dat_text_betrag_steuer() throws FileNotFoundException, IOException {
+    public String[][] lesenCsvEinnamen_ktonr_dat_text_betrag_steuer() throws FileNotFoundException, IOException {
         // Buchungsart.Ausgangsrechnung
         int anzZeilen = anzahlZeilenCsvBuch(2);
-        String[] buchEin = new String[anzZeilen];
+        String[] buchEinZeile = new String[anzZeilen];
+        String[][] buchEin = new String[anzZeilen][5];
 
         if (this.pruefenVorhandenCsvBuch()){
             BufferedReader br = new BufferedReader(new FileReader(csvBuchFileName));
@@ -188,15 +193,18 @@ public class Csv {
             System.out.println("Lese Einnahmen ...");
             int i = 0;
             while(scanner.hasNextLine()){
-                buchEin[i] = scanner.nextLine();
-                String[] buchSplit = buchEin[i].split(";");
-                System.out.println("Datum: " + buchSplit[0] + " Betrag: " + buchSplit[1] );
+                buchEinZeile[i] = scanner.nextLine();
+                String[] buchSplit = buchEinZeile[i].split(";");
+//                System.out.println("Datum: " + buchSplit[0] + " Betrag: " + buchSplit[1] );
                 if (buchSplit[2].equals("Ausgangsrechnung")) {
-                    System.out.println("Ausgangsrechnung!");
+//                    System.out.println("Ausgangsrechnung erkannt!");
+                    for (int row = 0; row < 5; row++) {
+                        buchEin[i][row] = buchSplit[row];
+                    }
                     i++;
                 } else {
                    // buchEin[i] = null;
-                    System.out.println("Keine Ausgangsrechnung!");
+//                    System.out.println("Keine Ausgangsrechnung!");
                    
                 }
             }
@@ -204,12 +212,16 @@ public class Csv {
             br.close();
         }
         else {
-            buchEin[0] = "0;0;undefiniert;Keine Buchung vorhanden!;undefiniert";
-            System.out.println(buchEin[0]);
+            buchEin[0][0] = "0";
+            buchEin[0][1] = "0";
+            buchEin[0][2] = "undefiniert";
+            buchEin[0][3] = "Keine Buchung (Ausgangsrechnung) vorhanden!";
+            buchEin[0][4] = "undefiniert";
+            System.out.println(buchEin[0][3]);
         }
         return buchEin;
     }
-private int anzahlZeilenCsvBuch(int wasTun) throws FileNotFoundException, IOException {
+    private int anzahlZeilenCsvBuch(int wasTun) throws FileNotFoundException, IOException {
     
         int rueckGabeWert = 0;
         if (this.pruefenVorhandenCsvBuch()){
@@ -243,11 +255,13 @@ private int anzahlZeilenCsvBuch(int wasTun) throws FileNotFoundException, IOExce
         return rueckGabeWert;
     }
 
-    public String[] lesenCsvAusgaben_ktonr_dat_text_betrag_steuer() throws FileNotFoundException, IOException {
+    public String[][] lesenCsvAusgaben_ktonr_dat_text_betrag_steuer() throws FileNotFoundException, IOException {
         // Buchungsart.Eingangsrechnung
 
         int anzZeilen = anzahlZeilenCsvBuch(1);
-        String[] buchAus = new String[anzZeilen];
+        String[] buchAusZeile = new String[anzZeilen];
+        String[][] buchAus = new String[anzZeilen][5];
+        
 
         if (this.pruefenVorhandenCsvBuch()){
             BufferedReader br = new BufferedReader(new FileReader(csvBuchFileName));
@@ -256,26 +270,32 @@ private int anzahlZeilenCsvBuch(int wasTun) throws FileNotFoundException, IOExce
             System.out.println("Lese Ausgaben ...");
             int i = 0;
             while(scanner.hasNextLine()){
-                buchAus[i] = scanner.nextLine();
-                System.out.println(""+buchAus[i]);
-                String[] buchSplit = buchAus[i].split(";");
-        //        System.out.println("Datum: " + buchSplit[0] + " Betrag: " + buchSplit[1] );
+                buchAusZeile[i] = scanner.nextLine();
+//                System.out.println(""+buchAusZeile[i]);
+                String[] buchSplit = buchAusZeile[i].split(";");
+//              System.out.println("Datum: " + buchSplit[0] + " Betrag: " + buchSplit[1] );
                 if (buchSplit[2].equals("Eingangsrechnung")) {
-                        System.out.println("Eingangsrechnung!");
+//                    System.out.println("Eingangsrechnung gefunden!");
+                    for (int row = 0; row<5; row++){
+                        buchAus[i][row] = buchSplit[row];
+                    }
                     i++;
                 } else {
                     // buchAus[i] = null;
                     //sollte eigentlich nicht passieren
-                    System.out.println("Keine Eingangsrechnung!");
-      
+                    System.out.println("Fehler in Logik - Keine Eingangsrechnung!");
                 }
             }
             scanner.close();
             br.close();
         }
         else {
-            buchAus[0] = "0;0;undefiniert;Keine Buchung vorhanden!;undefiniert";
-            System.out.println(buchAus[0]);
+            buchAus[0][0] = "0";
+            buchAus[0][1] = "0";
+            buchAus[0][2] = "undefiniert";
+            buchAus[0][3] = "Keine Buchung (Eingangsrechnung) vorhanden!";
+            buchAus[0][4] = "undefiniert";
+            System.out.println(buchAus[0][3]);
         }
         return buchAus;
     }

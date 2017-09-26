@@ -11,6 +11,7 @@ package wueb;
  */
 public class Login {
          boolean loginOK = false;
+
          
          public void setLoginRichtig(boolean setLogin) {
              this.loginOK = setLogin;
