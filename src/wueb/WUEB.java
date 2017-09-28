@@ -6,6 +6,7 @@ public class WUEB {
 
     private Csv csv ;
 //    private int csvBuchAktZeile;
+    /*
     private String konten[][];
     private String einnahmen[][];
     private String ausgaben[][];
@@ -13,9 +14,10 @@ public class WUEB {
     private String userName;
     private String userPassword;
     private String userPasswordClear;
+    */
 //    private int regNummer;
 
-    public WUEB() throws FileNotFoundException, IOException {
+    public WUEB() throws FileNotFoundException, IOException, Exception {
 
         this.csv = new Csv("buchungen.csv", "skr03.csv", "login.csv");
         if (!csv.pruefenVorhandenCsvKonten()){
@@ -41,6 +43,8 @@ public class WUEB {
         
         
         Login login = new Login();
+        
+        /*
         Operation operation = new Operation();
         ReadWriteDES rwDES = new ReadWriteDES();
         
@@ -56,18 +60,20 @@ public class WUEB {
             this.userPassword = splitLogin[1];
             this.userPasswordClear = rwDES.entschluesseln(this.userPassword);
         }
-        
-        // in guiLogin fehlt entsprechender Konstruktur
-        // guiLOGIN gLogin = new guiLOGIN(login, this.userName, this.userPasswordClear);
+        */
+        // in guiLogin fehlt entsprechender Konstruktur fuer login und csv
+        // so wäre es richtig: guiLOGIN gLogin = new guiLOGIN(login, this.csv);
+        guiLOGIN gLogin = new guiLOGIN();
         // boolean loginErfolg = gLogin.setVisible(true);
         if (login.getLoginRichtig()) {
+            gLogin.dispose();
             // --- hier gehts weiter
-            this.konten = csv.lesenCsvKonten_ktonr_bez();
-            this.ausgaben = csv.lesenCsvAusgaben_ktonr_dat_text_betrag_steuer();
-            this.einnahmen = csv.lesenCsvEinnamen_ktonr_dat_text_betrag_steuer();
-            double ausgabenBetrag = operation.nettoBerechnen(csv.summeAusgaben(), 19.00);
-            double einnamenBetrag = operation.nettoBerechnen(csv.summeEinnahmen(), 19.00);
-            double ueberschussBetrag = operation.summeUeberschuss(einnamenBetrag, ausgabenBetrag);
+            //this.konten = csv.lesenCsvKonten_ktonr_bez();
+            //this.ausgaben = csv.lesenCsvAusgaben_ktonr_dat_text_betrag_steuer();
+            //this.einnahmen = csv.lesenCsvEinnamen_ktonr_dat_text_betrag_steuer();
+            //double ausgabenBetrag = operation.nettoBerechnen(csv.summeAusgaben(), 19.00);
+            //double einnamenBetrag = operation.nettoBerechnen(csv.summeEinnahmen(), 19.00);
+            //double ueberschussBetrag = operation.summeUeberschuss(einnamenBetrag, ausgabenBetrag);
             // guiWUEB gWueb = new guiWUEB(this.konten, this.ausgaben, this.einnahmen, ausgabenBetrag, ausgabenBetrag, ueberschussBetrag);
             // gWueb.setVisible(true)
         }
@@ -75,7 +81,7 @@ public class WUEB {
   //      gLogin.dispose();
         
     }
-      public static void main(String[] args) throws FileNotFoundException, IOException {
+      public static void main(String[] args) throws FileNotFoundException, IOException, Exception {
         // TODO code application logic here
         WUEB wueb = new WUEB();
      }
