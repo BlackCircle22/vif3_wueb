@@ -6,15 +6,22 @@
 
 package wueb;
 
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author aschoenf
  */
 public class guiBUCHUNG extends javax.swing.JFrame {
+    
+    private Csv csv ;
 
     /** Creates new form guiBUCHUNG */
-    public guiBUCHUNG() {
+    public guiBUCHUNG() throws FileNotFoundException {
         initComponents();
+        this.csv = new Csv("buchungen.csv", "skr03.csv", "login.csv");
     }
 
     /** This method is called from within the constructor to
@@ -77,6 +84,11 @@ public class guiBUCHUNG extends javax.swing.JFrame {
         });
 
         btnSpeichern.setText("Speichern");
+        btnSpeichern.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSpeichernActionPerformed(evt);
+            }
+        });
 
         dropBuchungsart.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -123,9 +135,8 @@ public class guiBUCHUNG extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfBruttobetrag, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfNettobetrag, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(tfUmsatzsteuer)))))
+                            .addComponent(tfNettobetrag, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(tfUmsatzsteuer))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,6 +180,16 @@ public class guiBUCHUNG extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAbbrechenActionPerformed
 
+    private void btnSpeichernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpeichernActionPerformed
+        System.out.println("Er versucht");
+        try {
+            //this.csv.neueBuchungSchreiben("12.12.1212", 47.11, Buchungsart.Ausgangsrechnung, "TestBuchung1", Steuerschluessel.Mehrwertsteuer_19);
+            this.csv.neueBuchungSchreiben(this.tfDatum.getText(), Double.parseDouble(this.tfBruttobetrag.getText()), Buchungsart.Ausgangsrechnung, "GUIBuchung", Steuerschluessel.Mehrwertsteuer_19);
+        } catch (FileNotFoundException ex) {
+            System.out.println("Keine csv-Anbindung");
+        }
+    }//GEN-LAST:event_btnSpeichernActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,7 +220,11 @@ public class guiBUCHUNG extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new guiBUCHUNG().setVisible(true);
+                try {
+                    new guiBUCHUNG().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(guiBUCHUNG.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
