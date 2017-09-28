@@ -86,10 +86,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="tfBruttobetrag" pref="90" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="tfNettobetrag" pref="90" max="32767" attributes="0"/>
-                              <Component id="tfUmsatzsteuer" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="tfNettobetrag" pref="90" max="32767" attributes="0"/>
+                          <Component id="tfUmsatzsteuer" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -194,6 +192,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Speichern"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSpeichernActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="dropBuchungsart">
       <Properties>
