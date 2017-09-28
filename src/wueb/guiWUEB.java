@@ -5,6 +5,11 @@
  */
 package wueb;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author aschoenf
@@ -14,8 +19,18 @@ public class guiWUEB extends javax.swing.JFrame {
     /**
      * Creates new form guiWUEB
      */
-    public guiWUEB() {
+    public guiWUEB() throws FileNotFoundException, IOException {
         initComponents();
+        
+        
+        this.csv = new Csv("buchungen.csv", "skr03.csv");
+        this.tfEinnahmen.setText(""+this.csv.summeEinnahmen());
+        this.tfAusgaben.setText(""+this.csv.summeAusgaben());
+         
+        this.operation = new Operation();
+        this.tfUeberschuss.setText(""+ this.operation.summeUeberschuss());
+        
+        
     }
 
     /**
@@ -157,11 +172,19 @@ public class guiWUEB extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new guiWUEB().setVisible(true);
+                try {
+                    new guiWUEB().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(guiWUEB.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(guiWUEB.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
+    private Csv csv ;
+    private Operation operation ;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmNeueBuchung;
     private javax.swing.JTabbedPane jTabbedPane2;

@@ -1,3 +1,5 @@
+
+package wueb;
 public class Anmeldung {
 
     private String benutzername ;

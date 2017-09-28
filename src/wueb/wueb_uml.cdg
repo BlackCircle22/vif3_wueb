@@ -91,7 +91,7 @@
         <Method name="lesenCsvAusgaben_ktonr_dat_text_betrag_steuer" returnType="String[][]" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Operation" package="" visibility="public" xPosition="652.0" yPosition="206.0">
+    <Class name="Operation" package="" visibility="public" xPosition="525.0" yPosition="239.0">
       <Fields/>
       <Constructors/>
       <Methods>
