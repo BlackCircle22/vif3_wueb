@@ -1,3 +1,4 @@
+package wueb;
 public class Operation {
 
     public Double umsatzsteuerBerechnen(Double bruttoBetrag, Double steuerProzent) {
