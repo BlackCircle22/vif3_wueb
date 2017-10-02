@@ -15,7 +15,7 @@ public class guiWUEB extends JFrame {
     public guiWUEB() {
         initComponents();
         initTableDaten();
-        
+                
         tfAusgaben.setText("5000 Mark");
         tfEinnahmen.setText("1 Mark");
         tfUeberschuss.setText("Null Mark");
@@ -261,6 +261,23 @@ public class guiWUEB extends JFrame {
             {"0010", "Konzessionen und gewerbl.Schutzrechte", "Ertragskonto", "Mehrwertsteuer_7", "1050", "900", "19.09.2017"},
             {"0015", "Konzessionen", "Aufwandskonto", "Mehrwertsteuer_7", "1050", "900", "19.09.2017"},};
      
+   /*     private Csv csv ;
+                this.csv = new Csv("buchungen.csv", "skr03.csv");
+        if (!csv.pruefenVorhandenCsvKonten()){
+            System.out.println("Konten müssen zwingend vorhanden sein, Programmabbruch!");
+            // --> Applikation schließen ===
+            System.exit(0);
+        }
+        if (!csv.pruefenVorhandenCsvBuch()) {
+            csv.buchungenCsvErstellen();
+        }
+        
+        String[] konten = new String[1196];
+        konten = csv.lesenCsvKonten_ktonr_bez();
+        System.out.println("Test konto 1: " + konten[1]);
+        String[] kontenSplit = konten[275].split(";");
+        System.out.println("Kontonr: " + kontenSplit[0] + " Bezeichnung: " + kontenSplit[1] );*/
+        
 
         jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
                 einnahmen,
