@@ -89,10 +89,12 @@ public class guiLOGIN extends javax.swing.JFrame {
     
   
     
-    public guiLOGIN() {
+    public guiLOGIN(CsvBuch csvbu, CsvKont cvsko) {
         initComponents();
         //CsvBuch buch = new CsvBuch();
         //CsvKont kont = new CsvKont();
+        this.csvBuch = csvbu;
+        this.csvKont = csvko;
 
     }
 
@@ -218,7 +220,7 @@ public class guiLOGIN extends javax.swing.JFrame {
                     login = true;
                     //break;
                     if (login == true) {
-                        new guiWUEB().setVisible(rootPaneCheckingEnabled);
+                        new guiWUEB(this.csvBuch, this.csvKont).setVisible(rootPaneCheckingEnabled);
                         dispose();
                         break;
                     }
