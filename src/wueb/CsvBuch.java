@@ -74,7 +74,7 @@ public class CsvBuch {
             System.out.println("Datei Buchungen wird erstellt im Verzeichnis: " + this.path);
             try {
                 this.csvBuchPW = new PrintWriter(this.path + this.csvBuchFileName);
-                this.csvBuchPW.println("Datum;Betrag;Buchungsart;Buchungstext;Steuerschluessel");
+                //this.csvBuchPW.println("Datum;Betrag;Buchungsart;Buchungstext;Steuerschluessel");
                 this.csvBuchPW.close();
                 return true;
             } catch (FileNotFoundException ex) {
@@ -109,7 +109,11 @@ public class CsvBuch {
         
         for (int i=0; i<lines; i++) {
             if (buchEin[i][1] != null){
-              betrag = betrag + op.nettoBerechnen(Double.parseDouble(buchEin[i][1]), 19.00);
+                double steuerProzent = 19.00;
+                if (buchEin[i][4].equals("Mehrwertsteuer_7")) {
+                    steuerProzent = 7.00;
+                }
+              betrag = betrag + op.nettoBerechnen(Double.parseDouble(buchEin[i][1]), steuerProzent);
 //            System.out.println("Einnahmen-Betrag addiert: " + buchEin[1]);
             }
         }
@@ -128,9 +132,14 @@ public class CsvBuch {
         String[][] buchAus = this.getAusgabenDetails();
 
         for (int i=0; i<lines; i++) {
-            if (buchAus[i][1] != null)
-              betrag = betrag + op.nettoBerechnen(Double.parseDouble(buchAus[i][1]), 19.00);
-//            System.out.println("Ausgaben-Betrag addiert: " + buchAus[i][1]);
+            if (buchAus[i][1] != null) {
+                double steuerProzent = 19.00;
+                if (buchAus[i][4].equals("Mehrwertsteuer_7")) {
+                    steuerProzent = 7.00;
+                }
+                betrag = betrag + op.nettoBerechnen(Double.parseDouble(buchAus[i][1]), steuerProzent);
+                System.out.println("Ausgaben-Betrag addiert: " + buchAus[i][1]);
+            }
         }
         op = null;
         buchAus = null;
@@ -169,6 +178,7 @@ public class CsvBuch {
                         buchEin[i][row] = buchSplit[row];
                     }
                     i++;
+                    buchSplit = null;
                 } else {
                    // buchEin[i] = null;
 //                    System.out.println("Keine Ausgangsrechnung!");
@@ -273,6 +283,7 @@ public class CsvBuch {
                         buchAus[i][row] = buchSplit[row];
                     }
                     i++;
+                    buchSplit = null;
                 } else {
                     // buchAus[i] = null;
                     //System.out.println("Keine Eingangsrechnung!");
