@@ -1,36 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wueb;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
 
-/**
- *
- * @author aschoenf
- */
-public class guiWUEB extends javax.swing.JFrame {
+public class guiWUEB extends JFrame {
 
     /**
      * Creates new form guiWUEB
      */
-    public guiWUEB() throws FileNotFoundException, IOException {
+    CsvBuch csvBuch;
+    CsvKont csvKont;
+    
+    public guiWUEB(CsvBuch csvbu, CsvKont csvko) {
         initComponents();
         
+        this.csvBuch = csvbu;
+        this.csvKont = csvko;
         
-        this.csv = new Csv("buchungen.csv", "skr03.csv");
-        this.tfEinnahmen.setText(""+this.csv.summeEinnahmen());
-        this.tfAusgaben.setText(""+this.csv.summeAusgaben());
-         
-        this.operation = new Operation();
-        this.tfUeberschuss.setText(""+ this.operation.summeUeberschuss());
+        double tempAusgaben = this.csvBuch.getAusgabenSum();
+        String tempString = String.format("%1$,.2f", tempAusgaben);
+        tfAusgaben.setText((tempString));
+//        tfAusgaben.setText("5000 Mark");
         
-        
+        double tempEinnahmen = this.csvBuch.getEinnahmenSum();
+        tempString = String.format("%1$,.2f", tempEinnahmen);
+        tfEinnahmen.setText(tempString);
+
+        tempString = String.format("%1$,.2f", (tempEinnahmen + tempAusgaben));
+        tfUeberschuss.setText(tempString);
+
+        initTableDaten();
+
     }
 
     /**
@@ -51,7 +50,13 @@ public class guiWUEB extends javax.swing.JFrame {
         tfAusgaben = new javax.swing.JTextField();
         tfUeberschuss = new javax.swing.JTextField();
         lblTitel1 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        regPanel = new javax.swing.JTabbedPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtabEinnahmen = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtabAusgaben = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtabKonten = new javax.swing.JTable();
 
         lblTitel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblTitel.setText("Neue Buchung - WUEB");
@@ -80,62 +85,107 @@ public class guiWUEB extends javax.swing.JFrame {
         lblTitel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblTitel1.setText("Was über Bilanzen - WUEB");
 
+        jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Betrag", "Datum"
+            }
+        ));
+        jScrollPane4.setViewportView(jtabEinnahmen);
+
+        regPanel.addTab("Einnahmen", jScrollPane4);
+
+        jtabAusgaben.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jtabAusgaben);
+
+        regPanel.addTab("Ausgaben", jScrollPane5);
+
+        jtabKonten.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jtabKonten);
+
+        regPanel.addTab("Konten", jScrollPane6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(regPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(181, 181, 181)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEinnahmen, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblUeberschuss, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfEinnahmen)
-                            .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
+                        .addComponent(lblAusgaben)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAusgaben)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btmNeueBuchung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(25, 25, 25))
-                    .addComponent(lblTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(87, 87, 87))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane2)
-                .addContainerGap())
+                            .addComponent(tfAusgaben)
+                            .addComponent(btmNeueBuchung, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(25, 25, 25)
                 .addComponent(lblTitel1)
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEinnahmen)
-                    .addComponent(lblAusgaben)
-                    .addComponent(tfEinnahmen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfAusgaben, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblAusgaben))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfEinnahmen, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblEinnahmen)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUeberschuss)
-                    .addComponent(btmNeueBuchung)
-                    .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(btmNeueBuchung, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfUeberschuss, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void btmNeueBuchungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmNeueBuchungActionPerformed
-        // TODO add your handling code here:
+        new guiBUCHUNG(this.csvBuch, this.csvKont).setVisible(rootPaneCheckingEnabled);
+     // new guiBUCHUNG().setVisible(rootPaneCheckingEnabled);
+
     }//GEN-LAST:event_btmNeueBuchungActionPerformed
 
     private void tfEinnahmenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEinnahmenActionPerformed
@@ -168,33 +218,93 @@ public class guiWUEB extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(guiWUEB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        CsvBuch csvbu = new CsvBuch();
+        CsvKont csvko = new CsvKont();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new guiWUEB().setVisible(true);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(guiWUEB.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(guiWUEB.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new guiWUEB(csvbu, csvko).setVisible(true);
             }
         });
     }
 
-    private Csv csv ;
-    private Operation operation ;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmNeueBuchung;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable jtabAusgaben;
+    private javax.swing.JTable jtabEinnahmen;
+    private javax.swing.JTable jtabKonten;
     private javax.swing.JLabel lblAusgaben;
     private javax.swing.JLabel lblEinnahmen;
     private javax.swing.JLabel lblTitel;
     private javax.swing.JLabel lblTitel1;
     private javax.swing.JLabel lblUeberschuss;
+    private javax.swing.JTabbedPane regPanel;
     private javax.swing.JTextField tfAusgaben;
     private javax.swing.JTextField tfEinnahmen;
     private javax.swing.JTextField tfUeberschuss;
     // End of variables declaration//GEN-END:variables
+
+    public void initTableDaten() {
+
+        // Bsp. Daten für Registerkarten, muss noch mit csv.java übergeben werden
+        
+        String[][] einnahmen;
+        /*= {
+            {"1000", "01.01.1970"},
+            {"2000", "02.01.1970"},
+            {"3000", "03.01.1970"},
+            {"4000", "04.01.1970"},
+            {"5000", "05.01.1970"},
+            {"6000", "06.01.1970"},};
+        */
+        einnahmen = this.csvBuch.getEinnahmenDetails();
+        
+        
+        String[][] ausgaben;
+        /*= {
+            {"1100", "01.01.1975"},
+            {"2100", "02.01.1975"},
+            {"35500", "03.01.1975"},
+            {"45600", "04.01.1975"},
+            {"520", "05.01.1975"},
+            {"600", "06.01.1975"},};
+        */
+        ausgaben = this.csvBuch.getAusgabenDetails();
+        
+        String[][] konten;
+        /*= {
+            {"0001", "Ingangsetzungs- und Erweiterungsaufwand", "Aktivkonto"),
+            {"0002", "Aufwendungen Waehrungsumstellung Euro", "Passivkonto"},
+        */
+        konten = this.csvKont.getAllKont();
+
+        jtabEinnahmen.setModel(new javax.swing.table.DefaultTableModel(
+                einnahmen,
+                new String[]{
+                    "Datum", "Betrag", "DatumBuchungsart" , "Buchungstext" , "Steuerschluessel"
+                }
+        ));
+        jtabAusgaben.setModel(new javax.swing.table.DefaultTableModel(
+                ausgaben,
+                new String[]{
+                    "Datum", "Betrag", "DatumBuchungsart" , "Buchungstext" , "Steuerschluessel"
+                }
+        ));
+
+        jtabKonten.setModel(new javax.swing.table.DefaultTableModel(
+                konten,
+                new String[]{
+                    "Kontonummer", "Kontobezeichnung", "Kontoart"
+                }
+        ));
+        
+        
+
+    }
+
 }

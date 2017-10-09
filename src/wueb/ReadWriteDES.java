@@ -6,7 +6,11 @@ package wueb;
  * and open the template in the editor.
  */
 import java.io.*;
+import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import sun.misc.*;
@@ -16,28 +20,67 @@ import sun.misc.*;
  */
 public class ReadWriteDES {
     
-    public void encode( byte[] bytes, OutputStream out, String pass ) throws Exception  {
-    Cipher c = Cipher.getInstance( "DES" );
+    public void encode( byte[] bytes, OutputStream out, String pass )  {
+    Cipher c = null;
+        try {
+            c = Cipher.getInstance( "DES" );
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Fehler 301 - Algorithmus Cipher! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+
+        } catch (NoSuchPaddingException ex) {
+            System.out.println("Fehler 302 - Algorithmus Cipher (Pad)! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
     Key k = new SecretKeySpec( pass.getBytes(), "DES" );
-    c.init( Cipher.ENCRYPT_MODE, k );
+        try {
+            c.init( Cipher.ENCRYPT_MODE, k );
+        } catch (InvalidKeyException ex) {
+            System.out.println("Fehler 303 - Falscher Schluessel! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
 
     OutputStream cos = new CipherOutputStream( out, c );
-    cos.write( bytes );
-    cos.close();
+        try {
+            cos.write( bytes );
+        } catch (IOException ex) {
+            System.out.println("Fehler 304 - Schreibfehler cos! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
+        try {
+            cos.close();
+        } catch (IOException ex) {
+             System.out.println("Fehler 305 - Schliessenfehler cos! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+       }
   }
 
-    public byte[] decode( InputStream is, String pass ) throws Exception   {
-    Cipher c = Cipher.getInstance( "DES" );
+    public byte[] decode( InputStream is, String pass )  {
+    Cipher c = null;
+        try {
+            c = Cipher.getInstance( "DES" );
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Fehler 311 - Algorithmus Cipher! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        } catch (NoSuchPaddingException ex) {
+            System.out.println("Fehler 312 - Algorithmus Cipher (Pad)! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
     Key k = new SecretKeySpec( pass.getBytes(), "DES" );
-    c.init( Cipher.DECRYPT_MODE, k );
+        try {
+            c.init( Cipher.DECRYPT_MODE, k );
+        } catch (InvalidKeyException ex) {
+            System.out.println("Fehler 313 - Falscher Schluessel! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
 
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
     CipherInputStream cis = new CipherInputStream( is, c );
 
-    for (int b; ( b = cis.read() ) != -1;)
-      bos.write( b );
+        try {
+            for (int b; ( b = cis.read() ) != -1;)
+                bos.write( b );
+        } catch (IOException ex) {
+            System.out.println("Fehler 314 - Schreiben bos! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
 
-    cis.close();
+        try {
+            cis.close();
+        } catch (IOException ex) {
+            System.out.println("Fehler 315 - Schliessen bos! Klasse: " + this.getClass().getSimpleName() + " Code: "+ ex);
+        }
     return bos.toByteArray();
   }
 

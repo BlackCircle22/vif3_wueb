@@ -7,12 +7,12 @@ package wueb;
  * @version 1.0 
  *
 */ 
-public class WUEB {
+public class Wueb {
 
     private CsvBuch csvBuch ;
     private CsvKont csvKont ;
 
-    public WUEB() {
+    public Wueb() {
 
         this.csvKont = new CsvKont();
         if (!this.csvKont.checkIfExists()){
@@ -27,8 +27,9 @@ public class WUEB {
     }
 
     public static void main(String[] args) {
-        WUEB wueb = new WUEB();
-        guiLOGIN gLogin = new guiLOGIN(CsvBuch wueb.csvBuch, CsvKont wueb.csvKont);
+        Wueb wueb = new Wueb();
+        guiLOGIN glog = new guiLOGIN(wueb.csvBuch, wueb.csvKont);
+        glog.setVisible(true);
   //      gLogin.dispose();
 
       }
